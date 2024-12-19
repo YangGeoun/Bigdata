@@ -1,0 +1,66 @@
+* 파이썬 버전 확인
+> python --version
+
+* 아나콘다 버전 확인
+> conda --version
+
+* 아나콘다가 관리하는 가상환경 확인
+> conda env list
+
+* 현 가상환경에 설치되어 있는 라이브러리 확인
+> pip list
+
+--------------------------------------------------------------------
+
+<가상환경 생성>
+* 최초에 conda 라이브러리 업그레이드 해주기
+> conda update -n base conda
+
+* 가상환경 생성 : base 가상환경에서 명령 수행해야함
+- conda create -n 가상환경이름python=3.9
+> conda create -n dg_env_all python=3.9
+
+* 가상환경 실행 
+- conda activate 가상환경이름
+> conda activate dg_env_all
+
+* base로 돌아가기 실행 
+> conda deactivate
+
+--------------우리의 가상환경에서 아래 진행-----------------
+
+* pip 라이브러리 최신으로 업그레이드
+> python -m pip install --upgrade pip
+
+
+* 주피터 노트북 라이브러리 설치
+> pip install jupyter notebook
+
+* 주피터 노트북 에디터 실행하기
+> jupyter notebook
+
+* 주피터 노트북 에디터 종료하기
+>[ Ctrl + c ]
+
+* 커널 생성 : 가상환경과 노트북 에디터와 연결하기 위한 통로 만들기
+> python -m ipykernel install --user --name 가상환경이름 --display-name 커널이름
+> python -m ipykernel install --user --name dg_env_all --display-name dg_env_all_kernel
+
+* 커널 목록 확인
+> jupyter kernelspec list
+
+* 커널 삭제
+> jupyter kernelspec uninstall 커널이름
+
+* 기본 라이브러리 설치 (가상환경 이름 확인 후 설치하기)
+> pip install ipython jupyter matplotlib pandas xlrd seaborn scikit-learn pyarrow openpyxl selenium folium plotly xgboost
+
+
+
+
+
+
+
+
+
+
