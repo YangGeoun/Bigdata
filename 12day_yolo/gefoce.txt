@@ -1,0 +1,44 @@
+- Toch 설치하기 
+     - CUDA 버전에 대한 라이브러리 설치 코드 확인 URL 
+       : https://pytorch.org/get-started/locally/
+     > pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+
+     - 위 버전으로 실행이 안될 경우 아래로 설치  
+       : https://pytorch.org/get-started/locally/
+       : "install previous versions of PyTorch" 이전 버전 클릭하여 아래 부분이 있는 부분을 복사하여 사용
+     > pip install torch==2.5.0 torchvision==0.20.0 torchaudio==2.5.0 --index-url https://download.pytorch.org/whl/cu118
+
+
+ - 가상환경을 신규로 생성 시에 Python : 3.9로 설치 (3.7~3.10까지 가능)
+ - 텐서플로우 2.8.0 설치(강의 코드 CPU 테스트 버전은 2.8.2 입니다.)
+   (텐서플로우의 성능을 높이려면 호환성 최적화로 설치할 수 있는 conda로 설치하면 좋음)
+   >pip install tensorflow==2.8.0 
+
+
+######################################################
+########## 텐서플로우와 GPU 연동이 잘 되는지 확인 #########
+######################################################
+—---------------- Yolov5 가상환경에서  torch에서 GPU 연동 확인 —-------------------------------
+- GPU 학인 : 아래 결과에서 True가 나오면 성공
+     >import torch
+     >torch.cuda.get_device_name(0)	#gpu 확인
+     >torch.cuda.is_available()		#cuda 사용가능 여부 확인(True 나오면 성공)
+
+ 
+—------------------- 텐서 2.8.0이 설치된 가상환경에서 GPU 연동 확인 —-------------
+   - cmd or 주피터노트북에 아래 코드 실행 후 GPU 모두 잘 나오는지 확인
+     >from tensorflow.python.client import device_lib
+     >print(device_lib.list_local_devices())
+     --> 출력 결과에서 CPU 및 GPU 관련 정보가 모두 나오면 성공
+
+   <텐서 설치 확인 소스코드>
+    >python 엔터   
+    >>from tensorflow import keras
+    >>from tensorflow.keras.layers import Dense
+    >>dns = keras.Sequential()
+    >>dns.add(Dense(units=1, input_shape=(1, )))
+    >>dns.compile(optimizer="sgd", loss="mse")
+    >>dns.summary()
+    >>quit()
+

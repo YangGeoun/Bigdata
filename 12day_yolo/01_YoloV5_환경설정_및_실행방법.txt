@@ -1,0 +1,105 @@
+<Yolo(You Only Look Once) - V5>
+ - 객체 탐지(인지, 인식) 모델로 "욜로"라고 칭합니다.
+ - 한 개의 계층을 이용하여, 이미지 내에 객체(사물) 탐지를 원하는 물체의 
+   영역(Bounding Box라고 칭함)과 이름(Label), 정확도(Score)를 표시하기 위한
+   객체 탐지(Object Detection) 기술입니다.
+
+ ** 사전 학습 모델 : 사전에 학습된 모델을 의미함
+   - 대량의 데이터 및 다양한 특성을 가지는 데이터로 
+     사전에 미리 학습하여, 사용자들이 편하게 모델을 이용하여 예측 할 수 있도록 합니다.
+   - 사용자 입장에서는 사전에 데이터 수집 및 훈련에 소비되는 비용과 시간을 줄일 수 있음
+
+<객체 탐지 대상(매채)>
+ - 이미지 
+ - 카메라에서 수집되는 영상
+ - 동영상
+
+<Yolo 버전>
+ - Yolo v3 ~ Yolo vn : 계속해서 새로운 버전이 나오고 있음
+ - Yolo v3 ~ Yolo v5까지 : Yolo의 전통성에 따라서 업그레이드가 되었음
+ - Yolo v6부터 : Yolo의 전통성이 아닌 개인들에 의해서 업그레이드가 되고 있음
+
+<Yolo v5 환경 설정>
+1. Yolo v5 프레임워크 다운로드 하기
+ - 다운로드 URL : https://github.com/ultralytics/yolov5
+
+2. 가상환경 생성 및 라이브러리 설치하기
+ * 가상환경 생성, 주피터 노트북 설치, 커널 생성하기
+  - 가상환경 이름 : yolov5, 파이썬 버전 : 3.9, 커널 이름 : yolov5_kernel
+   >conda create -n yolov5 python=3.9
+   >conda activate yolov5
+   >python -m pip install --upgrade pip
+   >pip install jupyter notebook
+   >python -m ipykernel install --user --name yolov5 --display-name yolov5_kernel
+
+ * Yolo v5 라이브러리 설치하기
+  - 경로변경 : yolov5_master 폴더로 경로 변경하기 
+  - 라이브러리 설치 파일 : requirements.txt
+   >pip install -U -r requirements.txt
+
+3. 객체탐지 실행하기
+ * 이미지를 이용한 객체탐지 명령(프롬프트 창에서 실행)
+  - detect.py : 객체 탐지를 위한 실행 파일 
+                 : 탐지 시점에서 프로그램을 할 경우 이 파일을 수정 사용
+  - --weights : 모델 가중치 파일명을 오른쪽에 지정
+                 : 최초 yolov5_master 폴터 내에는 없는 파일이며,
+                 : 실행을 통해 최초 1회 다운로드되어 생성되어 있으며, 이후 명령 실행시에는 다운받지 않습니다.
+                 : 다운 받은 가중치를 이용하여 객체를 탐지하게 됩니다.
+  - --img : 입력 이미지의 크기를 통일 시킵니다. 가로 x 세로 = 640 x 640 사이즈로 통일
+             : 보통 사용되는 사이즈들 -> 320, 416, 640 (이중에 416 주로 사용됨)
+             : 이미지 사이즈에 따라서 정확도가 달라질 수 있음
+               (640 사이즈가 정확도가 가장 좋으며, 실행 시간은 조금더 오래 걸림)
+  - --conf : 객체 탐지의 신뢰도 임계값(정확도)를 설정
+             : 객체 인식률(정확도, 임계값)이 0.5(50%) 이상 정확도를 가지는 경우에만 탐지하겠다는 의미
+  - --source : 객체 탐지에 사용할 이미지 파일 위치 지정
+
+  >python ./detect.py --weights ./models/yolov5s.pt --img 640 --conf 0.5 --source ./data/images/bus.jpg
+
+  - 실행결과 이미지 확인 위치
+    -> 위 명령이 끝난 부분의 "Results saved to runs\detect\exp" 이 위치에 실행결과 이미지 있음
+
+
+
+ * 카메라를 이용한 실시간 객체탐지 명령(프롬프트 창에서 실행)----------------------------------------------
+  - 카메라 영상 데이터를 사용할 경우에는 source 뒤에 숫자 0을 붙이면 됩니다.
+  - PC에 카메라가 여러개 연결되어 있는 경우에는 0부터 숫자가 부여됩니다.(0, 1, 2...)
+    (사용할 카메라 번호를 source 뒤에 정의하면 됩니다.)
+   >python ./detect.py --weights ./models/yolov5s.pt --img 640 --conf 0.5 --source 0
+
+
+
+
+ * 동영상 파일을 이용한 객체탐지 명령(프롬프트 창에서 실행)----------------------------------------------
+  - --surce 뒤에 동영상 파일의 위치와 파일명을 지정하면 됨(이미지 처리와 동일)
+
+   >python ./detect.py --weights ./models/yolov5s.pt --img 640 --conf 0.5 --source ./data/mp4/ooo.mp4
+
+
+(detect.py 코드 수정하여, 탐지 객체 이미지로 저장하기)
+ - 파이썬(.py) 파일 프로그램 수정을 위해서, Visual-Studio Code 에디터 설치하기
+   --> VS-Code 다운로드 URL : https://code.visualstudio.com/download
+
+
+>>> CPU만으로 실행할 경우 위에 까지만 진행하면 됩니다.......
+
+===============================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
